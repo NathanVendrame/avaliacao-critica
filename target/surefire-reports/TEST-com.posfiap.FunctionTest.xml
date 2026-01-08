@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.posfiap.FunctionTest" time="0.554" tests="1" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/home/nathan/fiap/avaliacao-critica/target/test-classes:/home/nathan/fiap/avaliacao-critica/target/classes:/home/nathan/.m2/repository/com/microsoft/azure/functions/azure-functions-java-library/3.1.0/azure-functions-java-library-3.1.0.jar:/home/nathan/.m2/repository/com/microsoft/azure/functions/azure-functions-java-core-library/1.2.0/azure-functions-java-core-library-1.2.0.jar:/home/nathan/.m2/repository/org/junit/jupiter/junit-jupiter/5.4.2/junit-jupiter-5.4.2.jar:/home/nathan/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.4.2/junit-jupiter-api-5.4.2.jar:/home/nathan/.m2/repository/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar:/home/nathan/.m2/repository/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar:/home/nathan/.m2/repository/org/junit/platform/junit-platform-commons/1.4.2/junit-platform-commons-1.4.2.jar:/home/nathan/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.4.2/junit-jupiter-params-5.4.2.jar:/home/nathan/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.4.2/junit-jupiter-engine-5.4.2.jar:/home/nathan/.m2/repository/org/junit/platform/junit-platform-engine/1.4.2/junit-platform-engine-1.4.2.jar:/home/nathan/.m2/repository/org/mockito/mockito-core/2.23.4/mockito-core-2.23.4.jar:/home/nathan/.m2/repository/net/bytebuddy/byte-buddy/1.9.3/byte-buddy-1.9.3.jar:/home/nathan/.m2/repository/net/bytebuddy/byte-buddy-agent/1.9.3/byte-buddy-agent-1.9.3.jar:/home/nathan/.m2/repository/org/objenesis/objenesis/2.6/objenesis-2.6.jar:/home/nathan/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:/home/nathan/.m2/repository/com/sendgrid/sendgrid-java/4.10.1/sendgrid-java-4.10.1.jar:/home/nathan/.m2/repository/com/sendgrid/java-http-client/4.5.0/java-http-client-4.5.0.jar:/home/nathan/.m2/repository/org/apache/httpcomponents/httpcore/4.4.15/httpcore-4.4.15.jar:/home/nathan/.m2/repository/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar:/home/nathan/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar:/home/nathan/.m2/repository/commons-codec/commons-codec/1.11/commons-codec-1.11.jar:/home/nathan/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.13.3/jackson-core-2.13.3.jar:/home/nathan/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.13.3/jackson-annotations-2.13.3.jar:/home/nathan/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.13.3/jackson-databind-2.13.3.jar:/home/nathan/.m2/repository/org/bouncycastle/bcprov-jdk18on/1.76/bcprov-jdk18on-1.76.jar:"/>
+    <property name="java.vm.vendor" value="Eclipse Adoptium"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://adoptium.net/"/>
+    <property name="user.timezone" value="America/Sao_Paulo"/>
+    <property name="os.name" value="Linux"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="/home/nathan/.sdkman/candidates/java/21.0.7-tem/lib"/>
+    <property name="sun.java.command" value="/home/nathan/fiap/avaliacao-critica/target/surefire/surefirebooter-20260108195106033_3.jar /home/nathan/fiap/avaliacao-critica/target/surefire 2026-01-08T19-51-05_928-jvmRun1 surefire-20260108195106033_1tmp surefire_0-20260108195106033_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/home/nathan/fiap/avaliacao-critica/target/test-classes:/home/nathan/fiap/avaliacao-critica/target/classes:/home/nathan/.m2/repository/com/microsoft/azure/functions/azure-functions-java-library/3.1.0/azure-functions-java-library-3.1.0.jar:/home/nathan/.m2/repository/com/microsoft/azure/functions/azure-functions-java-core-library/1.2.0/azure-functions-java-core-library-1.2.0.jar:/home/nathan/.m2/repository/org/junit/jupiter/junit-jupiter/5.4.2/junit-jupiter-5.4.2.jar:/home/nathan/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.4.2/junit-jupiter-api-5.4.2.jar:/home/nathan/.m2/repository/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar:/home/nathan/.m2/repository/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar:/home/nathan/.m2/repository/org/junit/platform/junit-platform-commons/1.4.2/junit-platform-commons-1.4.2.jar:/home/nathan/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.4.2/junit-jupiter-params-5.4.2.jar:/home/nathan/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.4.2/junit-jupiter-engine-5.4.2.jar:/home/nathan/.m2/repository/org/junit/platform/junit-platform-engine/1.4.2/junit-platform-engine-1.4.2.jar:/home/nathan/.m2/repository/org/mockito/mockito-core/2.23.4/mockito-core-2.23.4.jar:/home/nathan/.m2/repository/net/bytebuddy/byte-buddy/1.9.3/byte-buddy-1.9.3.jar:/home/nathan/.m2/repository/net/bytebuddy/byte-buddy-agent/1.9.3/byte-buddy-agent-1.9.3.jar:/home/nathan/.m2/repository/org/objenesis/objenesis/2.6/objenesis-2.6.jar:/home/nathan/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:/home/nathan/.m2/repository/com/sendgrid/sendgrid-java/4.10.1/sendgrid-java-4.10.1.jar:/home/nathan/.m2/repository/com/sendgrid/java-http-client/4.5.0/java-http-client-4.5.0.jar:/home/nathan/.m2/repository/org/apache/httpcomponents/httpcore/4.4.15/httpcore-4.4.15.jar:/home/nathan/.m2/repository/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar:/home/nathan/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar:/home/nathan/.m2/repository/commons-codec/commons-codec/1.11/commons-codec-1.11.jar:/home/nathan/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.13.3/jackson-core-2.13.3.jar:/home/nathan/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.13.3/jackson-annotations-2.13.3.jar:/home/nathan/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.13.3/jackson-databind-2.13.3.jar:/home/nathan/.m2/repository/org/bouncycastle/bcprov-jdk18on/1.76/bcprov-jdk18on-1.76.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/home/nathan"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-04-15"/>
+    <property name="java.home" value="/home/nathan/.sdkman/candidates/java/21.0.7-tem"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/home/nathan/fiap/avaliacao-critica"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="surefire.real.class.path" value="/home/nathan/fiap/avaliacao-critica/target/surefire/surefirebooter-20260108195106033_3.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="21.0.7+6-LTS"/>
+    <property name="user.name" value="nathan"/>
+    <property name="stdout.encoding" value="UTF-8"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="5.15.167.4-microsoft-standard-WSL2"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Temurin-21.0.7+6"/>
+    <property name="localRepository" value="/home/nathan/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/adoptium/adoptium-support/issues"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="java.version" value="21.0.7"/>
+    <property name="user.dir" value="/home/nathan/fiap/avaliacao-critica"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="UTF-8"/>
+    <property name="java.vendor" value="Eclipse Adoptium"/>
+    <property name="java.vm.version" value="21.0.7+6-LTS"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="65.0"/>
+  </properties>
+  <testcase name="testHttpTriggerJava" classname="com.posfiap.FunctionTest" time="0.537">
+    <system-err><![CDATA[Jan 08, 2026 7:51:06 PM com.posfiap.Function run
+INFO: Java HTTP trigger processed a request.
+]]></system-err>
+  </testcase>
+</testsuite>
