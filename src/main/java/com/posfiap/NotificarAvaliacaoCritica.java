@@ -46,7 +46,7 @@ public class NotificarAvaliacaoCritica {
             enviarEmail(body.getEmail(), body.getDescricao());
             return request
                     .createResponseBuilder(HttpStatus.OK)
-                    .body("Notificação enviada com sucesso")
+                    .body("Notificação enviada com sucesso teste github actions")
                     .build();
         } catch (Exception e) {
             context.getLogger().severe("Erro ao enviar email: " + e.getMessage());
