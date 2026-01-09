@@ -6,12 +6,14 @@ import com.microsoft.azure.functions.*;
 import com.microsoft.azure.functions.annotation.*;
 
 import com.posfiap.dto.AvaliacaoCriticaDTO;
+import com.posfiap.infrastructure.AppContext;
 import com.posfiap.repository.UsuarioNotificacaoRepository;
 import com.sendgrid.*;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.*;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Azure Functions with HTTP Trigger.
@@ -39,18 +41,18 @@ public class NotificarAvaliacaoCritica {
             return;
         }
 
-        String email = null;
+        List<String> listaEmails;
         try {
-            UsuarioNotificacaoRepository repo = new UsuarioNotificacaoRepository();
-            email = repo.buscarEmailPorId(1);
+            UsuarioNotificacaoRepository repo = new UsuarioNotificacaoRepository(AppContext.dataSource());
+            listaEmails = repo.buscarEmailsParaNotificacao();
+            context.getLogger().info("Mensagem recebida: " + mensagem);
 
         } catch (Exception e) {
             context.getLogger().severe("erro ao buscar email: " + e.getMessage());
-            email = "evident.pinniped.dvao@protectsmail.net";
         }
 
         try {
-            enviarEmail(email, avaliacaoCriticaDTO.getDescricao());
+            enviarEmail("evident.pinniped.dvao@protectsmail.net", avaliacaoCriticaDTO.getDescricao());
         } catch (Exception e) {
             context.getLogger().severe("Erro ao enviar email: " + e.getMessage());
         }
