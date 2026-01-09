@@ -55,6 +55,7 @@ public class NotificarAvaliacaoCritica {
 
         listaEmails.forEach(email -> {
             try {
+                context.getLogger().info("Enviando email para: " + email);
                 enviarEmail(email, avaliacaoCriticaDTO.getDescricao());
             } catch (Exception e) {
                 context.getLogger().severe("Erro ao enviar email: " + e.getMessage());
