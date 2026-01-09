@@ -45,7 +45,7 @@ public class NotificarAvaliacaoCritica {
         try {
             UsuarioNotificacaoRepository repo = new UsuarioNotificacaoRepository(AppContext.dataSource());
             listaEmails = repo.buscarEmailsParaNotificacao();
-            context.getLogger().info("Mensagem recebida: " + mensagem);
+            context.getLogger().info("Lista de emails para notificar: " + listaEmails);
 
         } catch (Exception e) {
             context.getLogger().severe("erro ao buscar email: " + e.getMessage());
