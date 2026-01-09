@@ -4,6 +4,8 @@ package com.posfiap;
 import com.microsoft.azure.functions.*;
 import com.microsoft.azure.functions.annotation.*;
 
+import com.posfiap.dto.AvaliacaoCriticaDTO;
+import com.posfiap.repository.UsuarioNotificacaoRepository;
 import com.sendgrid.*;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.*;
@@ -15,11 +17,7 @@ import java.util.Optional;
  * Azure Functions with HTTP Trigger.
  */
 public class NotificarAvaliacaoCritica {
-    /**
-     * This function listens at endpoint "/api/NotificarAvaliacaoCritica". Two ways to invoke it using "curl" command in bash:
-     * 1. curl -d "HTTP Body" {your host}/api/NotificarAvaliacaoCritica
-     * 2. curl {your host}/api/NotificarAvaliacaoCritica?name=HTTP%20Query
-     */
+
     @FunctionName("NotificarAvaliacaoCritica")
     public HttpResponseMessage run(
             @HttpTrigger(
@@ -27,15 +25,20 @@ public class NotificarAvaliacaoCritica {
                     methods = {HttpMethod.POST},
                     authLevel = AuthorizationLevel.FUNCTION
             )
-            HttpRequestMessage<Optional<NotificacaoRequest>> request,
+            HttpRequestMessage<Optional<AvaliacaoCriticaDTO>> request,
             ExecutionContext context
     ) {
 
         context.getLogger().info("Iniciando envio de e-mail de avaliação crítica");
 
-        NotificacaoRequest body = request.getBody().orElse(null);
 
-        if (body == null || body.getEmail() == null || body.getDescricao() == null) {
+
+        AvaliacaoCriticaDTO body = request.getBody().orElse(null);
+
+        UsuarioNotificacaoRepository repo = new UsuarioNotificacaoRepository();
+        String email = repo.buscarEmailPorId(1);
+
+        if (body == null || email == null || body.getDescricao() == null) {
             return request
                     .createResponseBuilder(HttpStatus.BAD_REQUEST)
                     .body("Email e descrição são obrigatórios")
@@ -43,10 +46,10 @@ public class NotificarAvaliacaoCritica {
         }
 
         try {
-            enviarEmail(body.getEmail(), body.getDescricao());
+            enviarEmail(email, body.getDescricao());
             return request
                     .createResponseBuilder(HttpStatus.OK)
-                    .body("Notificação enviada com sucesso teste github actions")
+                    .body("Notificação enviada com sucesso")
                     .build();
         } catch (Exception e) {
             context.getLogger().severe("Erro ao enviar email: " + e.getMessage());
@@ -81,27 +84,5 @@ public class NotificarAvaliacaoCritica {
         request.setBody(mail.build());
 
         sg.api(request);
-    }
-
-    public class NotificacaoRequest {
-
-        private String descricao;
-        private String email;
-
-        public String getDescricao() {
-            return descricao;
-        }
-
-        public void setDescricao(String descricao) {
-            this.descricao = descricao;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
     }
 }
