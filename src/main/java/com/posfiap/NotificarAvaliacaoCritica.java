@@ -49,17 +49,20 @@ public class NotificarAvaliacaoCritica {
 
         } catch (Exception e) {
             context.getLogger().severe("erro ao buscar email: " + e.getMessage());
+            return;
         }
 
-        try {
-            enviarEmail("evident.pinniped.dvao@protectsmail.net", avaliacaoCriticaDTO.getDescricao());
-        } catch (Exception e) {
-            context.getLogger().severe("Erro ao enviar email: " + e.getMessage());
-        }
+
+        listaEmails.forEach(email -> {
+            try {
+                enviarEmail(email, avaliacaoCriticaDTO.getDescricao());
+            } catch (Exception e) {
+                context.getLogger().severe("Erro ao enviar email: " + e.getMessage());
+            }
+        });
     }
 
     private void enviarEmail(String emailDestino, String descricao) throws IOException {
-
         String apiKey = System.getenv("SENDGRID_API_KEY");
         String emailRemetente = System.getenv("EMAIL_REMETENTE");
 

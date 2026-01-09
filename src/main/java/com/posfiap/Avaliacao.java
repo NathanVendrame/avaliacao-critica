@@ -9,6 +9,7 @@ import com.microsoft.azure.functions.annotation.*;
 import com.microsoft.azure.functions.*;
 import lombok.Getter;
 import lombok.Setter;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * Azure Functions with HTTP Trigger.
@@ -66,12 +67,8 @@ public class Avaliacao {
                         .topicName(System.getenv("SERVICEBUS_TOPIC"))
                         .buildClient();
 
-        String payload = """
-            {
-                "descricao": "Aula nao fou do meu agrado",
-                "nota": 4
-            }
-        """;
+        ObjectMapper mapper = new ObjectMapper();
+        String payload = mapper.writeValueAsString(body);
 
         sender.sendMessage(new ServiceBusMessage(payload));
         sender.close();
