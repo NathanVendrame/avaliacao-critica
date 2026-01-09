@@ -1,6 +1,7 @@
 package com.posfiap;
 
 
+import com.google.gson.Gson;
 import com.microsoft.azure.functions.*;
 import com.microsoft.azure.functions.annotation.*;
 
@@ -11,7 +12,6 @@ import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.*;
 
 import java.io.IOException;
-import java.util.Optional;
 
 /**
  * Azure Functions with HTTP Trigger.
@@ -19,48 +19,40 @@ import java.util.Optional;
 public class NotificarAvaliacaoCritica {
 
     @FunctionName("NotificarAvaliacaoCritica")
-    public HttpResponseMessage run(
-            @HttpTrigger(
-                    name = "req",
-                    methods = {HttpMethod.POST},
-                    authLevel = AuthorizationLevel.FUNCTION
+    public void run(
+            @ServiceBusTopicTrigger(
+                    name = "mensagem",
+                    topicName = "%SERVICEBUS_TOPIC%",
+                    subscriptionName = "%SERVICEBUS_SUBSCRIPTION%",
+                    connection = "SERVICEBUS_CONNECTION"
             )
-            HttpRequestMessage<Optional<AvaliacaoCriticaDTO>> request,
+            String mensagem,
             ExecutionContext context
     ) {
+        context.getLogger().info("Mensagem recebida: " + mensagem);
         context.getLogger().info("Iniciando envio de e-mail de avaliação crítica");
 
-        AvaliacaoCriticaDTO body = null;
+        Gson gson = new Gson();
+        AvaliacaoCriticaDTO avaliacaoCriticaDTO = gson.fromJson(mensagem, AvaliacaoCriticaDTO.class);
+
+        if (avaliacaoCriticaDTO.getNota() > 4) {
+            return;
+        }
+
         String email = null;
         try {
-            body = request.getBody().orElse(null);
-
             UsuarioNotificacaoRepository repo = new UsuarioNotificacaoRepository();
             email = repo.buscarEmailPorId(1);
 
-            if (body == null || email == null || body.getDescricao() == null) {
-                return request
-                        .createResponseBuilder(HttpStatus.BAD_REQUEST)
-                        .body("Email e descrição são obrigatórios")
-                        .build();
-            }
         } catch (Exception e) {
             context.getLogger().severe("erro ao buscar email: " + e.getMessage());
-            throw new RuntimeException(e);
+            email = "evident.pinniped.dvao@protectsmail.net";
         }
 
         try {
-            enviarEmail(email, body.getDescricao());
-            return request
-                    .createResponseBuilder(HttpStatus.OK)
-                    .body("Notificação enviada com sucesso")
-                    .build();
+            enviarEmail(email, avaliacaoCriticaDTO.getDescricao());
         } catch (Exception e) {
             context.getLogger().severe("Erro ao enviar email: " + e.getMessage());
-            return request
-                    .createResponseBuilder(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erro ao enviar notificação")
-                    .build();
         }
     }
 

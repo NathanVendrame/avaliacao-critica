@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 public class AvaliacaoCriticaDTO {
     private String descricao;
+    private int nota;
     private String email;
 
 }
