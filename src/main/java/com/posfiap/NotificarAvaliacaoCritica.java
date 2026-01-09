@@ -28,21 +28,25 @@ public class NotificarAvaliacaoCritica {
             HttpRequestMessage<Optional<AvaliacaoCriticaDTO>> request,
             ExecutionContext context
     ) {
-
         context.getLogger().info("Iniciando envio de e-mail de avaliação crítica");
 
+        AvaliacaoCriticaDTO body = null;
+        String email = null;
+        try {
+            body = request.getBody().orElse(null);
 
+            UsuarioNotificacaoRepository repo = new UsuarioNotificacaoRepository();
+            email = repo.buscarEmailPorId(1);
 
-        AvaliacaoCriticaDTO body = request.getBody().orElse(null);
-
-        UsuarioNotificacaoRepository repo = new UsuarioNotificacaoRepository();
-        String email = repo.buscarEmailPorId(1);
-
-        if (body == null || email == null || body.getDescricao() == null) {
-            return request
-                    .createResponseBuilder(HttpStatus.BAD_REQUEST)
-                    .body("Email e descrição são obrigatórios")
-                    .build();
+            if (body == null || email == null || body.getDescricao() == null) {
+                return request
+                        .createResponseBuilder(HttpStatus.BAD_REQUEST)
+                        .body("Email e descrição são obrigatórios")
+                        .build();
+            }
+        } catch (Exception e) {
+            context.getLogger().severe("erro ao buscar email: " + e.getMessage());
+            throw new RuntimeException(e);
         }
 
         try {
