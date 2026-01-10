@@ -7,6 +7,7 @@ import com.azure.messaging.servicebus.ServiceBusMessage;
 import com.azure.messaging.servicebus.ServiceBusSenderClient;
 import com.microsoft.azure.functions.annotation.*;
 import com.microsoft.azure.functions.*;
+import com.posfiap.dto.AvaliacaoCriticaDTO;
 import lombok.Getter;
 import lombok.Setter;
 import tools.jackson.databind.ObjectMapper;
@@ -67,8 +68,9 @@ public class Avaliacao {
                         .topicName(System.getenv("SERVICEBUS_TOPIC"))
                         .buildClient();
 
+        AvaliacaoCriticaDTO avaliacaoCriticaDTO = new AvaliacaoCriticaDTO(body.getDescricao(), body.getNota());
         ObjectMapper mapper = new ObjectMapper();
-        String payload = "{ 'descricao': " + body.getDescricao() + ", 'nota': " + body.getNota() + "}";
+        String payload = mapper.writeValueAsString(avaliacaoCriticaDTO);
 
         sender.sendMessage(new ServiceBusMessage(payload));
         sender.close();
