@@ -2,6 +2,7 @@ package com.posfiap;
 
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.microsoft.azure.functions.*;
 import com.microsoft.azure.functions.annotation.*;
 
@@ -34,33 +35,37 @@ public class NotificarAvaliacaoCritica {
         context.getLogger().info("Mensagem recebida: " + mensagem);
         context.getLogger().info("Iniciando envio de e-mail de avaliação crítica");
 
-        Gson gson = new Gson();
-        AvaliacaoCriticaDTO avaliacaoCriticaDTO = gson.fromJson(mensagem, AvaliacaoCriticaDTO.class);
-
-        if (avaliacaoCriticaDTO.getNota() > 4) {
-            return;
-        }
-
-        List<String> listaEmails;
         try {
-            UsuarioNotificacaoRepository repo = new UsuarioNotificacaoRepository(AppContext.dataSource());
-            listaEmails = repo.buscarEmailsParaNotificacao();
-            context.getLogger().info("Lista de emails para notificar: " + listaEmails);
+            Gson gson = new Gson();
+            AvaliacaoCriticaDTO avaliacaoCriticaDTO = gson.fromJson(mensagem, AvaliacaoCriticaDTO.class);
 
-        } catch (Exception e) {
-            context.getLogger().severe("erro ao buscar email: " + e.getMessage());
-            return;
-        }
-
-
-        listaEmails.forEach(email -> {
-            try {
-                context.getLogger().info("Enviando email para: " + email);
-                enviarEmail(email, avaliacaoCriticaDTO.getDescricao());
-            } catch (Exception e) {
-                context.getLogger().severe("Erro ao enviar email: " + e.getMessage());
+            if (avaliacaoCriticaDTO.getNota() > 4) {
+                return;
             }
-        });
+
+            List<String> listaEmails;
+            try {
+                UsuarioNotificacaoRepository repo = new UsuarioNotificacaoRepository(AppContext.dataSource());
+                listaEmails = repo.buscarEmailsParaNotificacao();
+                context.getLogger().info("Lista de emails para notificar: " + listaEmails);
+
+            } catch (Exception e) {
+                context.getLogger().severe("erro ao buscar email: " + e.getMessage());
+                return;
+            }
+
+
+            listaEmails.forEach(email -> {
+                try {
+                    context.getLogger().info("Enviando email para: " + email);
+                    enviarEmail(email, avaliacaoCriticaDTO.getDescricao());
+                } catch (Exception e) {
+                    context.getLogger().severe("Erro ao enviar email: " + e.getMessage());
+                }
+            });
+        } catch (JsonSyntaxException e) {
+            context.getLogger().severe("Erro: " + e.getMessage());
+        }
     }
 
     private void enviarEmail(String emailDestino, String descricao) throws IOException {
