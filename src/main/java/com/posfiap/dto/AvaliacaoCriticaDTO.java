@@ -8,6 +8,5 @@ import lombok.Setter;
 public class AvaliacaoCriticaDTO {
     private String descricao;
     private int nota;
-    private String email;
 
 }

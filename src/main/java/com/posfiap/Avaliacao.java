@@ -55,11 +55,11 @@ public class Avaliacao {
                     .build();
         }
 
-        // Aqui você pode:
-        // - salvar no banco
-        // - enviar para o Service Bus
-        // - verificar se é avaliação crítica
-        // - etc.
+        context.getLogger().info(
+                "Avaliação recebida - Aluno: " + body.getAlunoId() +
+                        ", Nota: " + body.getNota()
+        );
+
         ServiceBusSenderClient sender =
                 new ServiceBusClientBuilder()
                         .connectionString(System.getenv("SERVICEBUS_CONNECTION"))
@@ -68,15 +68,10 @@ public class Avaliacao {
                         .buildClient();
 
         ObjectMapper mapper = new ObjectMapper();
-        String payload = mapper.writeValueAsString(body);
+        String payload = "{ 'descricao': " + body.getDescricao() + ", 'nota': " + body.getNota() + "}";
 
         sender.sendMessage(new ServiceBusMessage(payload));
         sender.close();
-
-        context.getLogger().info(
-                "Avaliação recebida - Aluno: " + body.getAlunoId() +
-                        ", Nota: " + body.getNota()
-        );
 
         return request.createResponseBuilder(HttpStatus.CREATED)
                 .body("Avaliação registrada com sucesso")
